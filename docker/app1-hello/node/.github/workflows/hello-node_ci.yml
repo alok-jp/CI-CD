@@ -45,6 +45,14 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
+      - name: Check Docker secrets
+        env:
+          USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+        run: |
+          echo "Username length: ${#USERNAME}"
+          echo "Password length: ${#PASSWORD}"
+
       - name: Build and push Docker Image
         uses: docker/build-push-action@v7
         with:
@@ -54,11 +62,5 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/hello-node:latest
 
-      - name: Check Docker secrets
-        env:
-          USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
-        run: |
-          echo "Username length: ${#USERNAME}"
-          echo "Password length: ${#PASSWORD}"
+      
 
